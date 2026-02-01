@@ -101,9 +101,9 @@ https://docs.chatterbot.us/contributing/
 
 ChatterBot is sponsored by:
 
-<p style="font-size:21px; color:black;">Browser testing via 
+<p>
    <a href="https://www.lambdatest.com/?utm_source=chatterbot&utm_medium=sponsor" target="_blank">
-      <img src="https://www.lambdatest.com/blue-logo.png" style="vertical-align: middle;" width="250" height="45" />
+      <img src="docs/_static/testmu-ai-white-logo.png" style="vertical-align: middle;" width="250" height="80" />
    </a>
 </p>
 

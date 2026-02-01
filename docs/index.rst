@@ -125,9 +125,9 @@ ChatterBot is sponsored by:
 
 .. raw:: html
 
-   <div style="font-size:21px; color:black; text-align: center;">Browser testing via 
+   <div style="text-align: center;">
       <a href="https://www.lambdatest.com/?utm_source=chatterbot&utm_medium=sponsor" target="_blank">
-         <img src="https://www.lambdatest.com/blue-logo.png" style="vertical-align: middle;" width="250" height="45" />
+         <img src="/_static/testmu-ai-white-logo.png" style="vertical-align: middle;" width="250" height="80" />
       </a>
    </div>
 
