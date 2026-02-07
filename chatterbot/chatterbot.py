@@ -1,4 +1,5 @@
 import logging
+import uuid
 from typing import Union
 from chatterbot.storage import StorageAdapter
 from chatterbot.logic import LogicAdapter
@@ -55,6 +56,14 @@ class ChatBot(object):
         self.name = name
 
         self.stream = stream
+
+        # Generate a default conversation ID for this ChatBot instance.
+        # This is used as a fallback when callers don't provide an explicit
+        # conversation ID, ensuring that conversation history is tracked
+        # within a session. Conversation IDs are necessary for cases such as
+        # the LLM-based logic adapters which require it to retrieve previous
+        # messages.
+        self.default_conversation = uuid.uuid4().hex
 
         self.logger = kwargs.get('logger', logging.getLogger(__name__))
 
@@ -147,11 +156,6 @@ class ChatBot(object):
         # NOTE: 'xx' is the language code for a multi-language model
         self.nlp = spacy.blank(self.tagger.language.ISO_639_1)
 
-        self.model = None
-        if model := kwargs.get('model'):
-            import_path = model.pop('client')
-            self.model = utils.initialize_class(import_path, self, **model)
-
         # Allow the bot to save input it receives so that it can learn
         self.read_only = kwargs.get('read_only', False)
 
@@ -198,6 +202,13 @@ class ChatBot(object):
         input_statement = Statement(text=text, **kwargs)
 
         input_statement.add_tags(*tags)
+
+        # If no conversation ID was provided, use the default session ID
+        # so that conversation history is tracked across calls. Callers
+        # can override this by passing an explicit conversation kwarg or
+        # setting it on the Statement object.
+        if not input_statement.conversation:
+            input_statement.conversation = self.default_conversation
 
         # Preprocess the input statement
         for preprocessor in self.preprocessors:
@@ -268,12 +279,6 @@ class ChatBot(object):
         results = []
         result = None
         max_confidence = -1
-
-        # If a model is provided, use it to process the input statement
-        # instead of the logic adapters
-        if self.model:
-            model_response = self.model.process(input_statement)
-            return model_response
 
         for adapter in self.logic_adapters:
             if adapter.can_process(input_statement):
@@ -360,8 +365,8 @@ class ChatBot(object):
             statement.in_response_to = previous_statement
 
         self.logger.info('Adding "{}" as a response to "{}"'.format(
-            previous_statement_text,
-            statement.text
+            statement.text,
+            previous_statement_text
         ))
 
         if not statement.persona:
