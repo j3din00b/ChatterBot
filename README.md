@@ -102,7 +102,7 @@ https://docs.chatterbot.us/contributing/
 ChatterBot is sponsored by:
 
 <p>
-   <a href="https://www.lambdatest.com/?utm_source=chatterbot&utm_medium=sponsor" target="_blank">
+   <a href="https://www.testmuai.com/?utm_source=chatterbot&utm_medium=sponsor" target="_blank">
       <img src="docs/_static/testmu-ai-white-logo.png" style="vertical-align: middle;" width="250" height="80" />
    </a>
 </p>
