@@ -4,7 +4,7 @@ ChatterBot is a machine learning, conversational dialog engine.
 from .chatterbot import ChatBot
 
 
-__version__ = '1.2.13'
+__version__ = '1.2.14'
 
 __all__ = (
     'ChatBot',
